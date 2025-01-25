@@ -1,8 +1,5 @@
 import os
 
-def sort_on(dict):
-    return dict["num"]
-
 def remove_nonalpha(content):
   cleaned_contents = ""
   for i in content:
