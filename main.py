@@ -1,3 +1,4 @@
+import argparse
 import os
 
 def remove_nonalpha(content):
@@ -24,9 +25,16 @@ def word_counter(contents):
 
 def main():
   # Open file
-  book_name = "frankenstein.txt"
   script_dir = os.path.dirname(__file__)
-  with open(script_dir + "/books/" + book_name) as f:
+  parser = argparse.ArgumentParser(description='Process a text file.')
+  parser.add_argument('filename', nargs='?', default=os.path.join(script_dir, 'books/frankenstein.txt'), type=str, help='The name of the file to process')
+  args = parser.parse_args()
+
+  if not os.path.isfile(args.filename):
+    print(f"File {args.filename} does not exist.")
+    return
+
+  with open(os.path.join(script_dir, args.filename)) as f:
     file_contents = f.read()
 
   # Get data
@@ -34,7 +42,7 @@ def main():
   words = word_counter(file_contents)
 
   # Print report
-  print(f"--- Begin report of books/${book_name} ---")
+  print(f"--- Begin report of books/${args.filename} ---")
   print(f"{words} words found in the document")
   print("")
   for i in chars:
